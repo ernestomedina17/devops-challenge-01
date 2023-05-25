@@ -2,7 +2,7 @@ resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "main"
+    Name = "Main"
   }
 }
 
@@ -11,7 +11,7 @@ resource "aws_subnet" "main_a" {
   cidr_block = "10.0.1.0/24"
 
   tags = {
-    Name = "Main"
+    Name = "Main A"
   }
 }
 
@@ -21,7 +21,7 @@ resource "aws_subnet" "main_b" {
   cidr_block = "10.0.2.0/24"
 
   tags = {
-    Name = "Main"
+    Name = "Main B"
   }
 }
 
@@ -30,6 +30,6 @@ resource "aws_subnet" "main_c" {
   cidr_block = "10.0.3.0/24"
 
   tags = {
-    Name = "Main"
+    Name = "Main C"
   }
 }
