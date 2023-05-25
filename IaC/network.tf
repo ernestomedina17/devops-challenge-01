@@ -36,10 +36,15 @@ resource "aws_subnet" "main_c" {
   }
 }
 
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
     Name = "Main"
   }
+}
+
+resource "aws_internet_gateway_attachment" "igw_attachment_to_main_vpc" {
+  internet_gateway_id = aws_internet_gateway.igw.id
+  vpc_id              = aws_vpc.main.id
 }
