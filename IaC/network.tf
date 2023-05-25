@@ -43,8 +43,3 @@ resource "aws_internet_gateway" "igw" {
     Name = "Main"
   }
 }
-
-resource "aws_internet_gateway_attachment" "igw_attachment_to_main_vpc" {
-  internet_gateway_id = aws_internet_gateway.igw.id
-  vpc_id              = aws_vpc.main.id
-}
