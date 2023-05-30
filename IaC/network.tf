@@ -48,40 +48,40 @@ resource "aws_internet_gateway" "igw" {
 # K8s network 
 #
 
-resource "aws_vpc_ipv4_cidr_block_association" "k8s_cidr" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.100.0.0/16"
-}
-
-resource "aws_subnet" "k8s_a" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.100.1.0/24"
-  availability_zone = var.availability_zone_names[0]
-  tags = {
-    Name                                                    = "K8s A"
-    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
-  }
-}
-
-
-resource "aws_subnet" "k8s_b" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.100.2.0/24"
-  availability_zone = var.availability_zone_names[1]
-
-  tags = {
-    Name                                                    = "K8s B"
-    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
-  }
-}
-
-resource "aws_subnet" "k8s_c" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.100.3.0/24"
-  availability_zone = var.availability_zone_names[2]
-
-  tags = {
-    Name                                                    = "K8s C"
-    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
-  }
-}
+#resource "aws_vpc_ipv4_cidr_block_association" "k8s_cidr" {
+#  vpc_id     = aws_vpc.main.id
+#  cidr_block = "10.100.0.0/16"
+#}
+#
+#resource "aws_subnet" "k8s_a" {
+#  vpc_id            = aws_vpc.main.id
+#  cidr_block        = "10.100.1.0/24"
+#  availability_zone = var.availability_zone_names[0]
+#  tags = {
+#    Name                                                    = "K8s A"
+#    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
+#  }
+#}
+#
+#
+#resource "aws_subnet" "k8s_b" {
+#  vpc_id            = aws_vpc.main.id
+#  cidr_block        = "10.100.2.0/24"
+#  availability_zone = var.availability_zone_names[1]
+#
+#  tags = {
+#    Name                                                    = "K8s B"
+#    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
+#  }
+#}
+#
+#resource "aws_subnet" "k8s_c" {
+#  vpc_id            = aws_vpc.main.id
+#  cidr_block        = "10.100.3.0/24"
+#  availability_zone = var.availability_zone_names[2]
+#
+#  tags = {
+#    Name                                                    = "K8s C"
+#    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
+#  }
+#}

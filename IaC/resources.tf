@@ -23,39 +23,39 @@ resource "aws_kms_key_policy" "unicron" {
   })
 }
 
-resource "aws_eks_cluster" "unicron" {
-  name     = "unicron"
-  version  = "1.27"
-  role_arn = aws_iam_role.unicron.arn
-
-  encryption_config {
-    provider {
-      key_arn = aws_kms_key.unicron.arn
-    }
-    resources = ["secrets"]
-  }
-
-  vpc_config {
-    subnet_ids = [aws_subnet.main_a.id, aws_subnet.main_b.id, aws_subnet.main_c.id]
-  }
-
-  # (Class A)
-  # Broadcast: 10.0.7.255            00001010.00000000.000001 11.11111111
-  # HostMin:   10.0.4.1              00001010.00000000.000001 00.00000001
-  # HostMax:   10.0.7.254            00001010.00000000.000001 11.11111110
-  # Hosts/Net: 1022                  (Private Internet)
-  kubernetes_network_config {
-    service_ipv4_cidr = "10.100.0.0/16"
-    ip_family         = "ipv4"
-  }
-
-  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
-  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
-  depends_on = [
-    aws_iam_role_policy_attachment.unicron-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.unicron-AmazonEKSVPCResourceController,
-  ]
-}
+#resource "aws_eks_cluster" "unicron" {
+#  name     = "unicron"
+#  version  = "1.27"
+#  role_arn = aws_iam_role.unicron.arn
+#
+#  encryption_config {
+#    provider {
+#      key_arn = aws_kms_key.unicron.arn
+#    }
+#    resources = ["secrets"]
+#  }
+#
+#  vpc_config {
+#    subnet_ids = [aws_subnet.main_a.id, aws_subnet.main_b.id, aws_subnet.main_c.id]
+#  }
+#
+#  # (Class A)
+#  # Broadcast: 10.0.7.255            00001010.00000000.000001 11.11111111
+#  # HostMin:   10.0.4.1              00001010.00000000.000001 00.00000001
+#  # HostMax:   10.0.7.254            00001010.00000000.000001 11.11111110
+#  # Hosts/Net: 1022                  (Private Internet)
+#  kubernetes_network_config {
+#    service_ipv4_cidr = "10.100.0.0/16"
+#    ip_family         = "ipv4"
+#  }
+#
+#  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
+#  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
+#  depends_on = [
+#    aws_iam_role_policy_attachment.unicron-AmazonEKSClusterPolicy,
+#    aws_iam_role_policy_attachment.unicron-AmazonEKSVPCResourceController,
+#  ]
+#}
 
 data "aws_iam_policy_document" "eks_assume_role" {
   statement {
@@ -91,40 +91,40 @@ resource "aws_iam_role_policy_attachment" "unicron-AmazonEKSVPCResourceControlle
 # Node group settings
 ##
 
-resource "aws_eks_node_group" "decepticons" {
-  cluster_name    = aws_eks_cluster.unicron.name
-  node_group_name = "decepticons"
-  node_role_arn   = aws_iam_role.decepticons.arn
-  subnet_ids      = [aws_subnet.k8s_a.id, aws_subnet.k8s_b.id, aws_subnet.k8s_c.id]
-  version         = aws_eks_cluster.unicron.version
-  ami_type        = "BOTTLEROCKET_ARM_64"
-  capacity_type   = "SPOT"
-  disk_size       = "50"
-  instance_types  = ["t4g.medium"]
-
-  scaling_config {
-    desired_size = 1
-    max_size     = 2
-    min_size     = 1
-  }
-
-  # Optional: Allow external changes without Terraform plan difference
-  lifecycle {
-    ignore_changes = [scaling_config[0].desired_size]
-  }
-
-  update_config {
-    max_unavailable = 1
-  }
-
-  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
-  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
-  depends_on = [
-    aws_iam_role_policy_attachment.decepticons-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.decepticons-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.decepticons-AmazonEC2ContainerRegistryReadOnly,
-  ]
-}
+#resource "aws_eks_node_group" "decepticons" {
+#  cluster_name    = aws_eks_cluster.unicron.name
+#  node_group_name = "decepticons"
+#  node_role_arn   = aws_iam_role.decepticons.arn
+#  subnet_ids      = [aws_subnet.k8s_a.id, aws_subnet.k8s_b.id, aws_subnet.k8s_c.id]
+#  version         = aws_eks_cluster.unicron.version
+#  ami_type        = "BOTTLEROCKET_ARM_64"
+#  capacity_type   = "ON_DEMAND"
+#  disk_size       = "50"
+#  instance_types  = ["t4g.medium"]
+#
+#  scaling_config {
+#    desired_size = 1
+#    max_size     = 2
+#    min_size     = 1
+#  }
+#
+#  # Optional: Allow external changes without Terraform plan difference
+#  lifecycle {
+#    ignore_changes = [scaling_config[0].desired_size]
+#  }
+#
+#  update_config {
+#    max_unavailable = 1
+#  }
+#
+#  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
+#  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
+#  depends_on = [
+#    aws_iam_role_policy_attachment.decepticons-AmazonEKSWorkerNodePolicy,
+#    aws_iam_role_policy_attachment.decepticons-AmazonEKS_CNI_Policy,
+#    aws_iam_role_policy_attachment.decepticons-AmazonEC2ContainerRegistryReadOnly,
+#  ]
+#}
 
 resource "aws_iam_role" "decepticons" {
   name = "eks-node-group-decepticons"
