@@ -1,6 +1,39 @@
+resource "aws_kms_key" "unicron" {
+  description = "unicron's kms key"
+}
+
+resource "aws_kms_key_policy" "unicron" {
+  key_id = aws_kms_key.unicron.id
+  policy = jsonencode({
+    Id = "unicron"
+    Statement = [
+      {
+        # Resource policy 
+        Action = "kms:*"
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::${var.aws_account_id}:root"
+        }
+
+        Resource = "*"
+        Sid      = "Allows IAM policies to allow access to the KMS key."
+      },
+    ]
+    Version = "2012-10-17"
+  })
+}
+
 resource "aws_eks_cluster" "unicron" {
   name     = "unicron"
+  version  = "1.27"
   role_arn = aws_iam_role.unicron.arn
+
+  encryption_config {
+    provider {
+      key_arn = aws_kms_key.unicron.arn
+    }
+    resources = ["secrets"]
+  }
 
   vpc_config {
     subnet_ids = [aws_subnet.main_a.id, aws_subnet.main_b.id, aws_subnet.main_c.id]
