@@ -63,5 +63,5 @@ data "aws_ssm_parameter" "eks_ami_release_version" {
 }
 
 output "recommended_ami_version" {
-  value =  data.aws_ssm_parameter.eks_ami_release_version.name
+  value = data.aws_ssm_parameter.eks_ami_release_version.name
 }

@@ -49,7 +49,7 @@ resource "aws_subnet" "k8s_a" {
   cidr_block        = "10.0.4.0/24"
   availability_zone = var.availability_zone_names[0]
   tags = {
-    Name = "K8s A"
+    Name                                                    = "K8s A"
     "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
   }
 }
@@ -61,7 +61,7 @@ resource "aws_subnet" "k8s_b" {
   availability_zone = var.availability_zone_names[1]
 
   tags = {
-    Name = "K8s B"
+    Name                                                    = "K8s B"
     "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
   }
 }
@@ -72,7 +72,7 @@ resource "aws_subnet" "k8s_c" {
   availability_zone = var.availability_zone_names[2]
 
   tags = {
-    Name = "K8s C"
+    Name                                                    = "K8s C"
     "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
   }
 }
