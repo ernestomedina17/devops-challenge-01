@@ -39,6 +39,11 @@ resource "aws_eks_cluster" "unicron" {
     subnet_ids = [aws_subnet.main_a.id, aws_subnet.main_b.id, aws_subnet.main_c.id]
   }
 
+  # (Class A)
+  # Broadcast: 10.0.7.255            00001010.00000000.000001 11.11111111
+  # HostMin:   10.0.4.1              00001010.00000000.000001 00.00000001
+  # HostMax:   10.0.7.254            00001010.00000000.000001 11.11111110
+  # Hosts/Net: 1022                  (Private Internet)
   kubernetes_network_config {
     service_ipv4_cidr = "10.0.4.0/22"
     ip_family         = "ipv4"
