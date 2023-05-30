@@ -57,3 +57,11 @@ output "unicron_eks_tags_all" {
 output "unicron_eks_vpc_config" {
   value = aws_eks_cluster.unicron.vpc_config
 }
+
+data "aws_ssm_parameter" "eks_ami_release_version" {
+  name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.unicron.version}/amazon-linux-2/recommended/release_version"
+}
+
+output "recommended_ami_version" {
+  value =  data.aws_ssm_parameter.eks_ami_release_version.name
+}

@@ -50,6 +50,7 @@ resource "aws_subnet" "k8s_a" {
   availability_zone = var.availability_zone_names[0]
   tags = {
     Name = "K8s A"
+    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
   }
 }
 
@@ -61,6 +62,7 @@ resource "aws_subnet" "k8s_b" {
 
   tags = {
     Name = "K8s B"
+    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
   }
 }
 
@@ -71,5 +73,6 @@ resource "aws_subnet" "k8s_c" {
 
   tags = {
     Name = "K8s C"
+    "kubernetes.io/cluster/${aws_eks_cluster.unicron.name}" = "shared"
   }
 }

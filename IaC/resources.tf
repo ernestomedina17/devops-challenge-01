@@ -82,11 +82,20 @@ resource "aws_iam_role_policy_attachment" "unicron-AmazonEKSVPCResourceControlle
   role       = aws_iam_role.unicron.name
 }
 
+
+# Node group settings
+##
+
 resource "aws_eks_node_group" "decepticons" {
   cluster_name    = aws_eks_cluster.unicron.name
   node_group_name = "decepticons"
   node_role_arn   = aws_iam_role.decepticons.arn
-  subnet_ids      = [aws_subnet.main_a.id, aws_subnet.main_b.id, aws_subnet.main_c.id]
+  subnet_ids      = [aws_subnet.k8s_a.id, aws_subnet.k8s_b.id, aws_subnet.k8s_c.id]
+  version         = aws_eks_cluster.unicron.version
+  ami_type        = "BOTTLEROCKET_ARM_64"
+  capacity_type   = "SPOT"
+  disk_size       = "50"
+  instance_types  = ["t4g.medium"]
 
   scaling_config {
     desired_size = 1
