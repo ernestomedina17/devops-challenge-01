@@ -45,7 +45,7 @@ resource "aws_eks_cluster" "unicron" {
   # HostMax:   10.0.7.254            00001010.00000000.000001 11.11111110
   # Hosts/Net: 1022                  (Private Internet)
   kubernetes_network_config {
-    service_ipv4_cidr = "10.0.4.0/22"
+    service_ipv4_cidr = "10.100.0.0/16"
     ip_family         = "ipv4"
   }
 
