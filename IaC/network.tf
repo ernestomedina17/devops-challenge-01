@@ -43,3 +43,33 @@ resource "aws_internet_gateway" "igw" {
     Name = "Main"
   }
 }
+
+resource "aws_subnet" "k8s_a" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.4.0/24"
+  availability_zone = var.availability_zone_names[0]
+  tags = {
+    Name = "K8s A"
+  }
+}
+
+
+resource "aws_subnet" "k8s_b" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.5.0/24"
+  availability_zone = var.availability_zone_names[1]
+
+  tags = {
+    Name = "K8s B"
+  }
+}
+
+resource "aws_subnet" "k8s_c" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.6.0/24"
+  availability_zone = var.availability_zone_names[2]
+
+  tags = {
+    Name = "K8s C"
+  }
+}
