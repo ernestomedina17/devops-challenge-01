@@ -40,7 +40,7 @@ resource "aws_eks_cluster" "unicron" {
   }
 
   kubernetes_network_config {
-    service_ipv4_cidr = "192.168.0.0/16"
+    service_ipv4_cidr = "10.0.4.0/22"
     ip_family         = "ipv4"
   }
 
