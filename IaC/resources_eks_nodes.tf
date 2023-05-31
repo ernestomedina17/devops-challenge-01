@@ -9,10 +9,10 @@ resource "aws_eks_node_group" "decepticons" {
     aws_subnet.private_c.id, # 192.168.192.0/18
   ]
   version        = aws_eks_cluster.unicron.version
-  ami_type       = "BOTTLEROCKET_ARM_64"
   capacity_type  = "ON_DEMAND"
-  disk_size      = "50"
+  disk_size      = "20"
   instance_types = ["t4g.medium"]
+  ami_type       = "BOTTLEROCKET_ARM_64"
 
   scaling_config {
     desired_size = 1
