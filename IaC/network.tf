@@ -59,22 +59,6 @@ resource "aws_internet_gateway" "internet_gw" {
   }
 }
 
-resource "aws_nat_gateway" "private_c" {
-  connectivity_type = "private"
-  subnet_id         = aws_subnet.private_c.id
-  tags = {
-    Scope = "Private"
-  }
-}
-
-resource "aws_nat_gateway" "private_b" {
-  connectivity_type = "private"
-  subnet_id         = aws_subnet.private_b.id
-  tags = {
-    Scope = "Private"
-  }
-}
-
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   tags = {
@@ -115,3 +99,20 @@ resource "aws_route_table_association" "private_c" {
   subnet_id      = aws_subnet.private_c.id
   route_table_id = aws_route_table.private.id
 }
+
+resource "aws_nat_gateway" "private_c" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.private_c.id
+  tags = {
+    Scope = "Private"
+  }
+}
+
+resource "aws_nat_gateway" "private_b" {
+  connectivity_type = "private"
+  subnet_id         = aws_subnet.private_b.id
+  tags = {
+    Scope = "Private"
+  }
+}
+
