@@ -12,6 +12,10 @@ resource "aws_default_network_acl" "default" {
   default_network_acl_id = aws_vpc.main.default_network_acl_id
   subnet_ids             = [aws_subnet.public_a.id, aws_subnet.public_b.id, aws_subnet.private_b.id, aws_subnet.private_c.id]
 
+  tags = {
+    Name = "Unicron"
+  }
+
   # Needs some security hardening and matching SGs or secondary ACLs for Public and Private subnets.
   ingress {
     protocol   = -1
@@ -35,6 +39,10 @@ resource "aws_default_network_acl" "default" {
 # This resource cannot be destroy, only managed.
 resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "Unicron"
+  }
 
   ingress {
     protocol  = -1
