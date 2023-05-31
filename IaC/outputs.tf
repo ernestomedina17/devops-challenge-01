@@ -17,7 +17,3 @@ output "unicron_eks_status" {
 output "unicron_eks_vpc_config" {
   value = aws_eks_cluster.unicron.vpc_config
 }
-
-output "eks_ami_release_version" {
-  value = local.eks_ami_release_version
-}
