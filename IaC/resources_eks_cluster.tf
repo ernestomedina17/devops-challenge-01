@@ -12,10 +12,10 @@ resource "aws_eks_cluster" "unicron" {
 
   vpc_config {
     subnet_ids = [
-      aws_subnet.public_a.id,   # 192.168.0.0/18
-      aws_subnet.public_b.id,   # 192.168.64.0/18
-      aws_subnet.private_b.id,  # 192.168.128.0/18
-      aws_subnet.private_c.id,  # 192.168.192.0/18
+      aws_subnet.public_a.id,  # 192.168.0.0/18
+      aws_subnet.public_b.id,  # 192.168.64.0/18
+      aws_subnet.private_b.id, # 192.168.128.0/18
+      aws_subnet.private_c.id, # 192.168.192.0/18
     ]
   }
 

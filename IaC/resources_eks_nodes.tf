@@ -2,17 +2,17 @@ resource "aws_eks_node_group" "decepticons" {
   cluster_name    = aws_eks_cluster.unicron.name
   node_group_name = "decepticons"
   node_role_arn   = aws_iam_role.decepticons.arn
-  subnet_ids      = [
-    aws_subnet.public_a.id,   # 192.168.0.0/18
-    aws_subnet.public_b.id,   # 192.168.64.0/18
-    aws_subnet.private_b.id,  # 192.168.128.0/18
-    aws_subnet.private_c.id,  # 192.168.192.0/18
+  subnet_ids = [
+    aws_subnet.public_a.id,  # 192.168.0.0/18
+    aws_subnet.public_b.id,  # 192.168.64.0/18
+    aws_subnet.private_b.id, # 192.168.128.0/18
+    aws_subnet.private_c.id, # 192.168.192.0/18
   ]
-  version         = aws_eks_cluster.unicron.version
-  ami_type        = "BOTTLEROCKET_ARM_64"
-  capacity_type   = "ON_DEMAND"
-  disk_size       = "50"
-  instance_types  = ["t4g.medium"]
+  version        = aws_eks_cluster.unicron.version
+  ami_type       = "BOTTLEROCKET_ARM_64"
+  capacity_type  = "ON_DEMAND"
+  disk_size      = "50"
+  instance_types = ["t4g.medium"]
 
   scaling_config {
     desired_size = 1
