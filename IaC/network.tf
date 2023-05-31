@@ -103,6 +103,7 @@ resource "aws_nat_gateway" "private_b" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   tags = {
+    Name  = "Unicron Public"
     Scope = "Public"
   }
 }
@@ -110,6 +111,7 @@ resource "aws_route_table" "public" {
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
   tags = {
+    Name  = "Unicron Private"
     Scope = "Private"
   }
 }
