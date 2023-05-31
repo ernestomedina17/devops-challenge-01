@@ -10,7 +10,7 @@ resource "aws_vpc" "main" {
 # This resource cannot be destroy, only managed.
 resource "aws_default_network_acl" "default" {
   default_network_acl_id = aws_vpc.main.default_network_acl_id
-  subnet_ids = [aws_subnet.public_a.id, aws_subnet.public_b.id, aws_subnet.private_b.id, aws_subnet.private_c.id]
+  subnet_ids             = [aws_subnet.public_a.id, aws_subnet.public_b.id, aws_subnet.private_b.id, aws_subnet.private_c.id]
 
   # Needs some security hardening and matching SGs or secondary ACLs for Public and Private subnets.
   ingress {
@@ -29,6 +29,25 @@ resource "aws_default_network_acl" "default" {
     cidr_block = "0.0.0.0/0"
     from_port  = 0
     to_port    = 0
+  }
+}
+
+# This resource cannot be destroy, only managed.
+resource "aws_default_security_group" "default" {
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    protocol  = -1
+    self      = true
+    from_port = 0
+    to_port   = 0
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
