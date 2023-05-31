@@ -7,16 +7,15 @@ resource "aws_vpc" "main" {
   }
 }
 
-# This resource cannot be destroy, only managed.
+# This resource cannot be destroyed, only managed.
 resource "aws_default_network_acl" "default" {
   default_network_acl_id = aws_vpc.main.default_network_acl_id
   subnet_ids             = [aws_subnet.public_a.id, aws_subnet.public_b.id, aws_subnet.private_b.id, aws_subnet.private_c.id]
 
   tags = {
-    Name = "Unicron"
+    Name = "Unicron Default"
   }
 
-  # Needs some security hardening and matching SGs or secondary ACLs for Public and Private subnets.
   ingress {
     protocol   = -1
     rule_no    = 100
@@ -36,12 +35,12 @@ resource "aws_default_network_acl" "default" {
   }
 }
 
-# This resource cannot be destroy, only managed.
+# This resource cannot be destroyed, only managed.
 resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "Unicron"
+    Name = "Unicron Default"
   }
 
   ingress {
@@ -124,6 +123,15 @@ resource "aws_nat_gateway" "private_b" {
   subnet_id         = aws_subnet.private_b.id
   tags = {
     Scope = "Private"
+  }
+}
+
+# This resource cannot be destroyed, only managed.
+resource "aws_default_route_table" "default" {
+  default_route_table_id = aws_vpc.main.default_route_table_id
+
+  tags = {
+    Name = "Unicron Default"
   }
 }
 
