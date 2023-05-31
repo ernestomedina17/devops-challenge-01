@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "Main"
+    Name = "Unicron"
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_subnet" "public_a" {
   cidr_block        = "192.168.0.0/18"
   availability_zone = var.availability_zone_names[0]
   tags = {
-    Name                     = "Public A"
+    Name                     = "Unicron Public A"
     "kubernetes.io/role/elb" = true
   }
 }
@@ -48,7 +48,7 @@ resource "aws_subnet" "public_b" {
   availability_zone = var.availability_zone_names[1]
 
   tags = {
-    Name                     = "Public B"
+    Name                     = "Unicron Public B"
     "kubernetes.io/role/elb" = true
   }
 }
@@ -59,7 +59,7 @@ resource "aws_subnet" "private_b" {
   availability_zone = var.availability_zone_names[1]
 
   tags = {
-    Name                              = "Private B"
+    Name                              = "Unicron Private B"
     "kubernetes.io/role/internal-elb" = true
   }
 }
@@ -70,7 +70,7 @@ resource "aws_subnet" "private_c" {
   availability_zone = var.availability_zone_names[2]
 
   tags = {
-    Name                              = "Private C"
+    Name                              = "Unicron Private C"
     "kubernetes.io/role/internal-elb" = true
   }
 }
@@ -80,7 +80,7 @@ resource "aws_internet_gateway" "internet_gw" {
   vpc_id = aws_vpc.main.id
   tags = {
     Scope = "Public"
-    Name  = "Main"
+    Name  = "Unicron"
   }
 }
 
