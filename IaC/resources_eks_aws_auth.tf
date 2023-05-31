@@ -18,6 +18,11 @@ resource "null_resource" "kubectl" {
     interpreter = ["/bin/bash", "-c"]
   }
 
+  #provisioner "local-exec" {
+  #  command     = 'eksctl get cluster --name unicron -o json | jq --raw-output '.[] | "[settings.kubernetes]\napi-server = \"" + .Endpoint + "\"\ncluster-certificate =\"" + .CertificateAuthority.Data + "\"\ncluster-name = \"unicron\""''
+  #  interpreter = ["/bin/bash", "-c"]
+  #}
+
   depends_on = [
     local_file.aws_auth_configmap,
     aws_eks_cluster.unicron

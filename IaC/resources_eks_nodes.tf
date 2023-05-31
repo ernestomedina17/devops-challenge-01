@@ -8,11 +8,13 @@ resource "aws_eks_node_group" "decepticons" {
     aws_subnet.private_b.id, # 192.168.128.0/18
     aws_subnet.private_c.id, # 192.168.192.0/18
   ]
-  version        = aws_eks_cluster.unicron.version
-  capacity_type  = "ON_DEMAND"
-  disk_size      = "20"
-  instance_types = ["t4g.medium"]
-  ami_type       = "BOTTLEROCKET_ARM_64"
+  version         = aws_eks_cluster.unicron.version
+  release_version = local.eks_al2_ami_release_version
+  capacity_type   = "ON_DEMAND"
+  disk_size       = "20"
+  instance_types  = ["t4g.medium"]
+  #ami_type       = "BOTTLEROCKET_ARM_64"
+  ami_type = "AL2_ARM_64"
 
   scaling_config {
     desired_size = 1
@@ -35,6 +37,7 @@ resource "aws_eks_node_group" "decepticons" {
     aws_iam_role_policy_attachment.decepticons-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.decepticons-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.decepticons-AmazonEC2ContainerRegistryReadOnly,
+    #aws_iam_role_policy_attachment.decepticons-AmazonSSMManagedInstanceCore,
   ]
 }
 
@@ -67,3 +70,9 @@ resource "aws_iam_role_policy_attachment" "decepticons-AmazonEC2ContainerRegistr
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.decepticons.name
 }
+
+# Bottlerocket's default SSM agent to get a shell session on the instance.
+#resource "aws_iam_role_policy_attachment" "decepticons-AmazonSSMManagedInstanceCore" {
+#  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+#  role       = aws_iam_role.decepticons.name
+#}
