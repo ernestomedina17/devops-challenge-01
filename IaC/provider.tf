@@ -9,4 +9,11 @@ terraform {
 
 provider "aws" {
   region = "eu-central-1"
+  default_tags {
+    tags = {
+      Environment = "Prod"
+      CreatedBy   = "Terraform"
+      Cluster     = "Unicron"
+    }
+  }
 }
