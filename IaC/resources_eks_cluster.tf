@@ -1,22 +1,17 @@
 resource "aws_eks_cluster" "unicron" {
-  name     = "unicron"
-  version  = "1.27"
+  name     = local.name
+  version  = local.k8s_version
   role_arn = aws_iam_role.unicron.arn
 
   encryption_config {
     provider {
-      key_arn = aws_kms_key.unicron.arn
+      key_arn = module.kms.kms_key_arn
     }
     resources = ["secrets"]
   }
 
   vpc_config {
-    subnet_ids = [
-      aws_subnet.public_a.id,  # 192.168.0.0/18
-      aws_subnet.public_b.id,  # 192.168.64.0/18
-      aws_subnet.private_b.id, # 192.168.128.0/18
-      aws_subnet.private_c.id, # 192.168.192.0/18
-    ]
+    subnet_ids = concat(module.network.private_subnet_id, module.network.public_subnet_id)
   }
 
   # Different from your AWS VPC
@@ -47,7 +42,7 @@ data "aws_iam_policy_document" "eks_assume_role" {
 }
 
 resource "aws_iam_role" "unicron" {
-  name               = "eks-cluster-unicron"
+  name               = "eks-cluster-${local.name}"
   assume_role_policy = data.aws_iam_policy_document.eks_assume_role.json
 }
 

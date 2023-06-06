@@ -1,5 +1,6 @@
 locals {
   name                                 = "unicron"
+  k8s_version                          = "1.27"
   eks_bottlerocket_ami_id              = data.aws_ssm_parameter.eks_bottlerocket_ami_id.value
   eks_bottlerocket_ami_release_version = data.aws_ssm_parameter.eks_bottlerocket_ami_release_version.value
   eks_al2_ami_id                       = data.aws_ssm_parameter.eks_al2_ami_id.value
