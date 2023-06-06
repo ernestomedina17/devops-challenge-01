@@ -1,5 +1,5 @@
 module "network" {
-  source = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-vpc"
+  source             = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-vpc"
   name               = local.name
   cidr_block         = "10.0.0.0/16"
   region             = var.aws_region
