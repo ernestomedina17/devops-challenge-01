@@ -38,6 +38,10 @@ output "bastion_ssh_key_name" {
   value = module.bastion.key_name
 }
 
+output "internal_ec2_instance_ip" {
+  value = aws_instance.internal.private_ip
+}
+
 #output "unicron_eks_endpoint" {
 #  value = aws_eks_cluster.unicron.endpoint
 #}
