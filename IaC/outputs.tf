@@ -10,6 +10,10 @@ output "public_subnet_ids" {
   value = module.network.public_subnet_id
 }
 
+output "vpc_default_sg_id" {
+  value = module.network.default_security_group_id
+}
+
 output "az_names" {
   value = data.aws_availability_zones.available.names
 }
@@ -20,6 +24,18 @@ output "az_count" {
 
 output "kms_arn" {
   value = module.kms.kms_key_arn
+}
+
+output "bastion_public_ip" {
+  value = module.bastion.public_ip
+}
+
+output "bastion_ssh_sg_id" {
+  value = module.bastion.ssh_security_group
+}
+
+output "bastion_ssh_key_name" {
+  value = module.bastion.key_name
 }
 
 #output "unicron_eks_endpoint" {

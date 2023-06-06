@@ -17,3 +17,17 @@ data "aws_ssm_parameter" "eks_bottlerocket_ami_id" {
 data "aws_ssm_parameter" "eks_bottlerocket_ami_release_version" {
   name = "/aws/service/bottlerocket/aws-k8s-${local.k8s_version}/arm64/latest/image_version"
 }
+
+data "aws_ami" "amzn-linux-2023-ami" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-arm64"]
+  }
+}
+
+data "local_file" "ssh_pub_key" {
+  filename = sensitive("${var.home}/.ssh/id_rsa.pub")
+}
