@@ -25,11 +25,11 @@ module "bastion" {
 }
 
 resource "aws_instance" "internal" {
-  ami           = data.aws_ami.amzn-linux-2023-ami.id
-  instance_type = "t4g.medium"
-  subnet_id     = module.network.private_subnet_id[0]
-  security_groups     = [module.network.default_security_group_id]
+  ami             = data.aws_ami.amzn-linux-2023-ami.id
+  instance_type   = "t4g.medium"
+  subnet_id       = module.network.private_subnet_id[0]
+  security_groups = [module.network.default_security_group_id]
+  key_name        = module.bastion.key_name
 
   tags = { Name = "internal" }
-  }
 }
