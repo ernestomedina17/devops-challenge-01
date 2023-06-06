@@ -2,7 +2,7 @@ resource "aws_eks_node_group" "decepticons" {
   cluster_name    = aws_eks_cluster.unicron.name
   node_group_name = "decepticons"
   node_role_arn   = aws_iam_role.decepticons.arn
-  subnet_ids      = concat(module.network.private_subnet_id, module.network.public_subnet_id)
+  subnet_ids      = [module.network.private_subnet_id[0]]
   version         = local.k8s_version
   release_version = local.eks_al2_ami_release_version
   capacity_type   = "ON_DEMAND"
