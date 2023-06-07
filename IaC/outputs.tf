@@ -50,9 +50,9 @@ output "eks_cluster_id" {
   value = module.eks.cluster_endpoint
 }
 
-output "eks_node_group_id" {
-  value = module.eks.nodes_id
-}
+#output "eks_node_group_id" {
+#  value = module.eks.nodes_id
+#}
 
 output "eks_endpoint" {
   value = module.eks.cluster_endpoint
@@ -62,14 +62,14 @@ output "eks_identity" {
   value = module.eks.cluster_identity
 }
 
-output "unicron_eks_vpc_config" {
-  value = module.eks.unicron_eks_vpc_config
+output "eks_vpc_config" {
+  value = module.eks.eks_vpc_config
 }
 
 output "eks_cluster_role_arn" {
   value = module.eks.cluster_role_arn
 }
 
-output "eks_nodes_role_arn" {
-  value = module.eks.nodes_role_arn
-}
+#output "eks_nodes_role_arn" {
+#  value = module.eks.nodes_role_arn
+#}
