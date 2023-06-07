@@ -26,6 +26,10 @@ output "kms_arn" {
   value = module.kms.kms_key_arn
 }
 
+output "kms_alias_arn" {
+  value = module.kms.kms_alias_arn
+}
+
 #output "bastion_public_ip" {
 #  value = module.bastion.public_ip
 #}
@@ -42,22 +46,30 @@ output "kms_arn" {
 #  value = aws_instance.internal.private_ip
 #}
 
-#output "unicron_eks_endpoint" {
-#  value = aws_eks_cluster.unicron.endpoint
-#}
-#
-#output "unicron_eks_identity" {
-#  value = aws_eks_cluster.unicron.identity
-#}
-#
-#output "unicron_eks_version" {
-#  value = aws_eks_cluster.unicron.platform_version
-#}
-#
-#output "unicron_eks_status" {
-#  value = aws_eks_cluster.unicron.status
-#}
-#
-#output "unicron_eks_vpc_config" {
-#  value = aws_eks_cluster.unicron.vpc_config
-#}
+output "eks_cluster_id" {
+  value = module.eks.cluster_endpoint
+}
+
+output "eks_node_group_id" {
+  value = module.eks.nodes_id
+}
+
+output "eks_endpoint" {
+  value = module.eks.cluster_endpoint
+}
+
+output "eks_identity" {
+  value = module.eks.cluster_identity
+}
+
+output "unicron_eks_vpc_config" {
+  value = module.eks.unicron_eks_vpc_config
+}
+
+output "eks_cluster_role_arn" {
+  value = module.eks.cluster_role_arn
+}
+
+output "eks_nodes_role_arn" {
+  value = module.eks.nodes_role_arn
+}

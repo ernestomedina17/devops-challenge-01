@@ -12,3 +12,19 @@ module "kms" {
   name           = local.name
   aws_account_id = var.aws_account_id
 }
+
+module "eks" {
+  source              = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks"
+  name                = local.name
+  myhome              = var.myhome
+  subnets             = [module.network.private_subnet_id[0]]
+  kms_key_arn         = module.kms.kms_key_arn
+  ami_release_version = data.aws_ssm_parameter.eks_al2_ami_release_version.value
+  k8s_version         = local.k8s_version
+
+  # defaults
+  capacity_type  = "ON_DEMAND"
+  disk_size      = 20
+  instance_types = "t4g.medium"
+  ami_type       = "AL2_ARM_64"
+}

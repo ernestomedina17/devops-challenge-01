@@ -29,5 +29,5 @@ data "aws_ami" "amzn-linux-2023-ami" {
 }
 
 data "local_file" "ssh_pub_key" {
-  filename = sensitive("${var.home}/.ssh/id_rsa.pub")
+  filename = sensitive("${var.myhome}/.ssh/id_rsa.pub")
 }
