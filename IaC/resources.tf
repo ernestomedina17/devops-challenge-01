@@ -17,7 +17,8 @@ module "eks" {
   source              = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks"
   name                = local.name
   myhome              = var.myhome
-  subnets             = [module.network.private_subnet_id[0]]
+  subnets_cluster     = module.network.private_subnet_id
+  subnets_node_group  = [module.network.private_subnet_id[0]] # Only one subnet has NAT GW, to save money.
   kms_key_arn         = module.kms.kms_key_arn
   ami_release_version = data.aws_ssm_parameter.eks_al2_ami_release_version.value
   k8s_version         = local.k8s_version
