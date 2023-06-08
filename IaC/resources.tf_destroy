@@ -22,6 +22,7 @@ module "eks" {
   kms_key_arn         = module.kms.kms_key_arn
   ami_release_version = data.aws_ssm_parameter.eks_al2_ami_release_version.value
   k8s_version         = local.k8s_version
+  ssh_key_name        = module.bastion.key_name
 
   # defaults
   capacity_type  = "ON_DEMAND"

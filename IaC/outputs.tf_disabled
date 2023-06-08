@@ -30,18 +30,18 @@ output "kms_alias_arn" {
   value = module.kms.kms_alias_arn
 }
 
-#output "bastion_public_ip" {
-#  value = module.bastion.public_ip
-#}
-#
-#output "bastion_ssh_sg_id" {
-#  value = module.bastion.ssh_security_group
-#}
-#
-#output "bastion_ssh_key_name" {
-#  value = module.bastion.key_name
-#}
-#
+output "bastion_public_ip" {
+  value = module.bastion.public_ip
+}
+
+output "bastion_ssh_sg_id" {
+  value = module.bastion.ssh_security_group
+}
+
+output "bastion_ssh_key_name" {
+  value = module.bastion.key_name
+}
+
 #output "internal_ec2_instance_ip" {
 #  value = aws_instance.internal.private_ip
 #}
