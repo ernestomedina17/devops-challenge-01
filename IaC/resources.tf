@@ -15,8 +15,8 @@ module "kms" {
 
 
 module "cluster_role" {
-  source         = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster-role"
-  name           = local.name
+  source = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster-role"
+  name   = local.name
 }
 
 #module "eks" {
