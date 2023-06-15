@@ -38,6 +38,34 @@ output "eks_cluster_sg_id" {
   value = module.cluster_sg.eks_cluster_sg_id
 }
 
+output "eks_web_identity" {
+  value = module.eks_cluster.web_identity
+}
+
+output "eks_web_identity_arn" {
+  value = module.eks_cluster.web_identity_arn
+}
+
+output "eks_nodes_role_arn" {
+  value = module.eks_nodes_role.nodes_role_arn
+}
+
+output "manually_config_map_aws_auth_yaml" {
+  value = module.eks_nodes_role.config_map_aws_auth_yaml
+}
+
+output "manually_create_kubeconfig_in_bastion" {
+  value = module.eks_nodes_role.create_kubeconfig
+}
+
+output "manually_apply_cm_aws_auth_in_bastion" {
+  value = module.eks_nodes_role.apply_cm_aws_auth
+}
+
+output "manually_annotate_serviceaccount" {
+  value = module.eks_nodes_role.annotate_serviceaccount
+}
+
 #output "bastion_public_ip" {
 #  value = module.bastion.public_ip
 #}

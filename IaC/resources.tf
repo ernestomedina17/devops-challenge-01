@@ -35,6 +35,14 @@ module "eks_cluster" {
   k8s_version          = local.k8s_version
   security_group_ids   = [module.cluster_sg.eks_cluster_sg_id]
   kube_proxy_version   = "v1.27.1-eksbuild.1"
-  coredns_version      = "v1.10.1-eksbuild.1"
-  vpc_cni_version      = "v1.12.6-eksbuild.2"
+  #coredns_version      = "v1.10.1-eksbuild.1"
+  vpc_cni_version = "v1.12.6-eksbuild.2"
+}
+
+
+module "eks_nodes_role" {
+  source           = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-nodes-role"
+  name             = local.name
+  web_identity     = module.eks_cluster.web_identity
+  web_identity_arn = module.eks_cluster.web_identity_arn
 }
