@@ -28,6 +28,7 @@ module "cluster_sg" {
 module "eks_cluster" {
   source               = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster"
   name                 = local.name
+  aws_account_id       = var.aws_account_id
   iam_role_cluster_arn = module.cluster_role.eks_cluster_role_arn
   subnets_cluster      = module.network.private_subnet_id
   kms_key_arn          = module.kms.kms_key_arn
