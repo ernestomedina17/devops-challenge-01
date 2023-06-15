@@ -50,58 +50,14 @@ output "eks_nodes_role_arn" {
   value = module.eks_nodes_role.nodes_role_arn
 }
 
-output "manually_config_map_aws_auth_yaml" {
+output "manual_config_map_aws_auth_yaml" {
   value = module.eks_nodes_role.config_map_aws_auth_yaml
 }
 
-output "manually_create_kubeconfig_in_bastion" {
-  value = module.eks_nodes_role.create_kubeconfig
+output "manual_steps" {
+  value = module.eks_nodes_role.manual_steps
 }
 
-output "manually_apply_cm_aws_auth_in_bastion" {
-  value = module.eks_nodes_role.apply_cm_aws_auth
+output "eks_node_group_id" {
+  value = module.eks_nodes.node_group_id
 }
-
-output "manually_annotate_serviceaccount" {
-  value = module.eks_nodes_role.annotate_serviceaccount
-}
-
-#output "bastion_public_ip" {
-#  value = module.bastion.public_ip
-#}
-#
-#output "bastion_ssh_sg_id" {
-#  value = module.bastion.ssh_security_group
-#}
-#
-#output "bastion_ssh_key_name" {
-#  value = module.bastion.key_name
-#}
-#
-##output "internal_ec2_instance_ip" {
-##  value = aws_instance.internal.private_ip
-##}
-#
-#output "eks_cluster_id" {
-#  value = module.eks.cluster_endpoint
-#}
-#
-##output "eks_node_group_id" {
-##  value = module.eks.nodes_id
-##}
-#
-#output "eks_endpoint" {
-#  value = module.eks.cluster_endpoint
-#}
-#
-#output "eks_identity" {
-#  value = module.eks.cluster_identity
-#}
-#
-#output "eks_vpc_config" {
-#  value = module.eks.eks_vpc_config
-#}
-#
-##output "eks_nodes_role_arn" {
-##  value = module.eks.nodes_role_arn
-##}
