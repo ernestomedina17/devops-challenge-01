@@ -19,20 +19,21 @@ module "cluster_role" {
   name   = local.name
 }
 
-#module "eks" {
-#  source              = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks"
-#  name                = local.name
-#  myhome              = var.myhome
-#  subnets_cluster     = module.network.private_subnet_id
-#  subnets_node_group  = [module.network.private_subnet_id[0]] # Only one subnet has NAT GW, to save money.
-#  kms_key_arn         = module.kms.kms_key_arn
-#  ami_release_version = data.aws_ssm_parameter.eks_al2_ami_release_version.value
-#  k8s_version         = local.k8s_version
-#  ssh_key_name        = module.bastion.key_name
-#
-#  # defaults
-#  capacity_type  = "ON_DEMAND"
-#  disk_size      = 20
-#  instance_types = "t4g.medium"
-#  ami_type       = "AL2_ARM_64"
-#}
+module "cluster_sg" {
+  source = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster-sg"
+  name   = local.name
+  vpc_id = module.network.vpc_network_id
+}
+
+module "eks_cluster" {
+  source               = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster"
+  name                 = local.name
+  iam_role_cluster_arn = module.cluster_role.eks_cluster_role_arn
+  subnets_cluster      = module.network.private_subnet_id
+  kms_key_arn          = module.kms.kms_key_arn
+  k8s_version          = local.k8s_version
+  security_group_ids   = [module.cluster_sg.eks_cluster_sg_id]
+  kube_proxy_version   = "v1.27.1-eksbuild.1"
+  coredns_version      = "v1.10.1-eksbuild.1"
+  vpc_cni_version      = "v1.12.6-eksbuild.2"
+}

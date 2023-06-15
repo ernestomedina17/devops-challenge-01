@@ -34,6 +34,10 @@ output "eks_cluster_role_arn" {
   value = module.cluster_role.eks_cluster_role_arn
 }
 
+output "eks_cluster_sg_id" {
+  value = module.cluster_sg.eks_cluster_sg_id
+}
+
 #output "bastion_public_ip" {
 #  value = module.bastion.public_ip
 #}
