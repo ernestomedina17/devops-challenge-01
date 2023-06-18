@@ -13,15 +13,21 @@ This Project creates an EKS cluster with a single node using terraform modules f
 - TF_VAR_myhome: E.g. ~/home/$username or /Users/$username
 
 # Installation
-```git clone https://github.com/ernestomedina17/devops-challenge-01.git
+```
+git clone https://github.com/ernestomedina17/devops-challenge-01.git
 cd devops-challenge-01/IaC/
-terraform init```
+terraform init
+```
 
 # Configuration
 Edit the locals.tf and set the name to anything you want.
 Edit the env.tfvars to suit your project needs.
 (Optional) Tweak the resources.tf file if you need specifics.
-```terraform plan -out .tf_plan.hcl -var-file env.tfvars```
+```
+terraform plan -out .tf_plan.hcl -var-file env.tfvars
+```
 
 # Deployment
-```terraform apply apply .tf_plan.hcl```
+```
+terraform apply apply .tf_plan.hcl
+```
