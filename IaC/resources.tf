@@ -13,7 +13,6 @@ module "kms" {
   aws_account_id = var.aws_account_id
 }
 
-
 module "cluster_role" {
   source = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster-role"
   name   = local.name
@@ -41,12 +40,12 @@ module "eks_cluster" {
   endpoint_public_access  = true
 }
 
-
 module "eks_nodes_role" {
   source           = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-nodes-role"
   name             = local.name
   web_identity     = module.eks_cluster.web_identity
   web_identity_arn = module.eks_cluster.web_identity_arn
+  myhome           = var.myhome
 }
 
 module "eks_nodes" {

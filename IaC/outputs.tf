@@ -50,14 +50,6 @@ output "eks_nodes_role_arn" {
   value = module.eks_nodes_role.nodes_role_arn
 }
 
-output "manual_config_map_aws_auth_yaml" {
-  value = module.eks_nodes_role.config_map_aws_auth_yaml
-}
-
-output "manual_steps" {
-  value = module.eks_nodes_role.manual_steps
-}
-
 output "eks_node_group_id" {
   value = module.eks_nodes.node_group_id
 }
