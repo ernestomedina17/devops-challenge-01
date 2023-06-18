@@ -20,9 +20,10 @@ terraform init
 ```
 
 # Configuration
-Edit the locals.tf and set the name to anything you want.
-Edit the env.tfvars to suit your project needs.
-(Optional) Tweak the resources.tf file if you need specifics.
+1. Edit the locals.tf and set the name to anything you want.
+2. Edit the env.tfvars to suit your project needs.
+3. (Optional) Tweak the resources.tf file if you need specifics.
+4. Execute:
 ```
 terraform plan -out .tf_plan.hcl -var-file env.tfvars
 ```
