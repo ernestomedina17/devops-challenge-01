@@ -38,6 +38,7 @@ module "eks_cluster" {
   vpc_cni_version         = "v1.12.6-eksbuild.2"
   endpoint_private_access = true
   endpoint_public_access  = true
+  log_retention_days      = 5
 }
 
 module "eks_nodes_role" {
