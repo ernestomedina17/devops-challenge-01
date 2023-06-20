@@ -59,7 +59,7 @@ module "eks_nodes" {
   capacity_type       = "ON_DEMAND"
   disk_size           = "20"
   instance_types      = "t4g.medium"
-  ami_type            = "AL2_ARM_64"
+  ami_type            = local.ami_type
   coredns_version     = "v1.10.1-eksbuild.1"
   #ssh_key_name = ""
 }
