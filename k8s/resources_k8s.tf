@@ -86,3 +86,124 @@ resource "kubernetes_service_account" "aws_load_balancer_controller" {
     }
   }
 }
+
+resource "null_resource" "aws_load_balancer_controller" {
+  provisioner "local-exec" {
+    command     = "helm repo add eks https://aws.github.io/eks-charts"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  provisioner "local-exec" {
+    command     = "helm repo update eks"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  provisioner "local-exec" {
+    command     = "helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=${local.cluster_name} --set serviceAccount.create=false --set serviceAccount.name=${local.svcacc_aws_lb_ctr}"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  depends_on = [
+    kubernetes_service_account.aws_load_balancer_controller
+  ]
+}
+
+resource "kubernetes_service" "frontend" {
+  metadata {
+    name      = "${local.name}-frontend"
+    namespace = local.name
+  }
+  spec {
+    selector = {
+      app = "${local.name}-frontend"
+    }
+    session_affinity = "ClientIP"
+    port {
+      port        = 80
+      target_port = 80
+    }
+
+    type = "NodePort"
+  }
+}
+
+#resource "kubernetes_ingress" "frontend" {
+#  metadata {
+#    name      = local.name
+#    namespace = local.name
+#    annotations = {
+#      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+#      "alb.ingress.kubernetes.io/target-type" = "ip"
+#    }
+#  }
+#
+#  spec {
+#    ingress_class_name = "alb"
+#    backend {
+#      service_name = "${local.name}-frontend"
+#      service_port = 8080
+#    }
+#
+#    rule {
+#      http {
+#        path {
+#          backend {
+#            service_name = "${local.name}-frontend"
+#            service_port = 8080
+#          }
+#          path = "/"
+#        }
+#      }
+#    }
+#
+#    #tls {
+#    #  secret_name = "tls-secret"
+#    #}
+#  }
+#}
+
+resource "kubernetes_ingress_v1" "frontend" {
+  metadata {
+    name      = local.name
+    namespace = local.name
+    annotations = {
+      "kubernetes.io/ingress.class" = "alb"
+      #"alb.ingress.kubernetes.io/scheme"      = "internal"
+      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+    }
+  }
+
+  spec {
+    default_backend {
+      service {
+        name = "${local.name}-frontend"
+        port {
+          number = 80
+        }
+      }
+    }
+
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = "${local.name}-frontend"
+              port {
+                number = 80
+              }
+            }
+          }
+
+          path      = "/"
+          path_type = "Prefix"
+        }
+      }
+    }
+
+    #tls {
+    #  secret_name = "tls-secret"
+    #}
+  }
+}
