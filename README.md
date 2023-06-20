@@ -32,3 +32,14 @@ terraform plan -out .tf_plan.hcl -var-file env.tfvars
 ```
 terraform apply apply .tf_plan.hcl
 ```
+
+# App installation 
+1. Install helm cli and make it available in your PATH
+2. Execute: 
+```
+cd k8s
+terraform init
+terraform plan -out .tf_plan.hcl -var-file env.tfvars
+terraform apply apply .tf_plan.hcl
+```
+
