@@ -1,0 +1,12 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+.terraform.lock.hcl
+.tf_plan.hcl
+
+# generated local_file 
+config_map_aws_auth.yaml
