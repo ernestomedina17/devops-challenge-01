@@ -103,6 +103,12 @@ resource "null_resource" "aws_load_balancer_controller" {
     interpreter = ["/bin/bash", "-c"]
   }
 
+  provisioner "local-exec" {
+    when    = destroy
+    command = "helm uninstall aws-load-balancer-controller -n kube-system"
+    #on_failure = continue
+  }
+
   depends_on = [
     kubernetes_service_account.aws_load_balancer_controller
   ]
@@ -172,4 +178,9 @@ resource "kubernetes_ingress_v1" "frontend" {
     #}
   }
   depends_on = [kubernetes_namespace.little_caesar]
+}
+
+resource "time_sleep" "wait_10_seconds" {
+  create_duration = "10s"
+  depends_on = [kubernetes_ingress_v1.frontend]
 }
