@@ -34,8 +34,8 @@ output "eks_cluster_role_arn" {
   value = module.cluster_role.eks_cluster_role_arn
 }
 
-output "eks_cluster_sg_id" {
-  value = module.cluster_sg.eks_cluster_sg_id
+output "eks_cluster_vpc_config" {
+  value = module.eks_cluster.eks_vpc_config
 }
 
 output "eks_web_identity" {

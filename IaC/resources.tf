@@ -18,11 +18,11 @@ module "cluster_role" {
   name   = local.name
 }
 
-module "cluster_sg" {
-  source = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster-sg"
-  name   = local.name
-  vpc_id = module.network.vpc_network_id
-}
+#module "cluster_sg" {
+#  source = "git@github.com:ernestomedina17/tf-modules.git//aws/4/eks-cluster-sg"
+#  name   = local.name
+#  vpc_id = module.network.vpc_network_id
+#}
 
 # Manually enable Session Tokens from the STS endpoints for your Region.
 module "eks_cluster" {
@@ -33,7 +33,6 @@ module "eks_cluster" {
   subnets_cluster         = module.network.private_subnet_id
   kms_key_arn             = module.kms.kms_key_arn
   k8s_version             = local.k8s_version
-  security_group_ids      = [module.cluster_sg.eks_cluster_sg_id]
   kube_proxy_version      = "v1.27.1-eksbuild.1"
   vpc_cni_version         = "v1.12.6-eksbuild.2"
   endpoint_private_access = true
