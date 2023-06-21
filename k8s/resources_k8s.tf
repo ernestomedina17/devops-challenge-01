@@ -127,41 +127,6 @@ resource "kubernetes_service" "frontend" {
   }
 }
 
-#resource "kubernetes_ingress" "frontend" {
-#  metadata {
-#    name      = local.name
-#    namespace = local.name
-#    annotations = {
-#      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
-#      "alb.ingress.kubernetes.io/target-type" = "ip"
-#    }
-#  }
-#
-#  spec {
-#    ingress_class_name = "alb"
-#    backend {
-#      service_name = "${local.name}-frontend"
-#      service_port = 8080
-#    }
-#
-#    rule {
-#      http {
-#        path {
-#          backend {
-#            service_name = "${local.name}-frontend"
-#            service_port = 8080
-#          }
-#          path = "/"
-#        }
-#      }
-#    }
-#
-#    #tls {
-#    #  secret_name = "tls-secret"
-#    #}
-#  }
-#}
-
 resource "kubernetes_ingress_v1" "frontend" {
   metadata {
     name      = local.name
@@ -206,4 +171,5 @@ resource "kubernetes_ingress_v1" "frontend" {
     #  secret_name = "tls-secret"
     #}
   }
+depends_on = [kubernetes_namespace.little_caesar]
 }
