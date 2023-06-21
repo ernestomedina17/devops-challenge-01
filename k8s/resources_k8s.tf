@@ -171,5 +171,5 @@ resource "kubernetes_ingress_v1" "frontend" {
     #  secret_name = "tls-secret"
     #}
   }
-depends_on = [kubernetes_namespace.little_caesar]
+  depends_on = [kubernetes_namespace.little_caesar]
 }
