@@ -15,7 +15,7 @@ This Project creates an EKS cluster with a single node using terraform modules f
 # Installation
 ```
 git clone https://github.com/ernestomedina17/devops-challenge-01.git
-cd devops-challenge-01/IaC/
+cd devops-challenge-01/eks/
 terraform init
 ```
 
@@ -37,7 +37,7 @@ terraform apply .tf_plan.hcl
 1. Install helm cli and make it available in your PATH
 2. Execute: 
 ```
-cd k8s
+cd app_namespace
 terraform init
 terraform plan -out .tf_plan.hcl -var-file env.tfvars
 terraform apply .tf_plan.hcl
