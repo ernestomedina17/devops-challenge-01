@@ -30,7 +30,7 @@ terraform plan -out .tf_plan.hcl -var-file env.tfvars
 
 # Deployment
 ```
-terraform apply apply .tf_plan.hcl
+terraform apply .tf_plan.hcl
 ```
 
 # App installation 
@@ -40,6 +40,6 @@ terraform apply apply .tf_plan.hcl
 cd k8s
 terraform init
 terraform plan -out .tf_plan.hcl -var-file env.tfvars
-terraform apply apply .tf_plan.hcl
+terraform apply .tf_plan.hcl
 ```
 
